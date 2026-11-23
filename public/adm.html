@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administração de Usuários - Pinterest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="navbar">
+    <a href="boasvindas.html" class="logo">
+      <span class="logo-icon">)))</span> Pinterest Admin
+    </a>
+    <div class="nav-links">
+      <a href="boasvindas.html">Boas-vindas</a>
+      <button onclick="sair()" class="btn-sair">Sair</button>
+    </div>
+  </header>
+
+  <div class="container-admin">
+    <h1 style="text-align: left;">Administração de Usuários</h1>
+    <p class="subtitulo" style="text-align: left;">Busque por CPF, visualize todos os cadastrados, edite ou apague contas</p>
+
+    <!-- Busca pelo CPF -->
+    <div class="busca-box">
+      <input type="text" id="campoBuscaCPF" placeholder="Digite o CPF do usuário...">
+      <button type="button" onclick="buscarPorCPF()" class="btn-pinterest" style="width: auto; margin-top: 0;">Buscar</button>
+      <button type="button" onclick="listarTodos()" class="btn-secundario">Listar Todos</button>
+    </div>
+
+    <!-- Lista de todos os usuários -->
+    <div class="tabela-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>CPF</th>
+            <th>Email</th>
+            <th>Rua</th>
+            <th>CEP</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabela-corpo"></tbody>
+      </table>
+    </div>
+
+    <!-- Formulário de Edição (PUT) -->
+    <div class="painel-edicao" id="areaEdicao" style="display: none;">
+      <h2>Editar Dados do Usuário</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label>ID:</label>
+          <input type="text" id="identificador" disabled>
+        </div>
+        <div class="form-group">
+          <label>CPF:</label>
+          <input type="text" id="identificadorCPF">
+        </div>
+        <div class="form-group">
+          <label>Nome:</label>
+          <input type="text" id="nomeAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Sobrenome:</label>
+          <input type="text" id="sobrenomeAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Email:</label>
+          <input type="email" id="emailAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Senha:</label>
+          <input type="text" id="senhaAtualizar">
+        </div>
+        <div class="form-group full">
+          <label>Rua:</label>
+          <input type="text" id="ruaAtualizar">
+        </div>
+        <div class="form-group">
+          <label>CEP:</label>
+          <input type="text" id="cepAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Cidade:</label>
+          <input type="text" id="cidadeAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Estado:</label>
+          <input type="text" id="estadoAtualizar">
+        </div>
+        <div class="form-group">
+          <label>Telefone:</label>
+          <input type="text" id="telefoneAtualizar">
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; margin-top: 12px;">
+        <button type="button" onclick="atualizarDados()" class="btn-pinterest" style="width: auto;">Salvar Alterações</button>
+        <button type="button" onclick="cancelarEdicao()" class="btn-secundario">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

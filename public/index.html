@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pinterest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">📌</span> Pinterest
+        </a>
+    </header>
+
+    <div class="container">
+        <h1>Entrar no Pinterest</h1>
+        <p class="subtitulo">Digite seu e-mail e senha para continuar</p>
+
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Digite seu e-mail" required>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-pinterest">Entrar</button>
+        </form>
+
+        <div class="link-rodape">
+            Não tem uma conta? <a href="cadastro.html">Cadastre-se aqui</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formLogin').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value.trim();
+
+            // Conta de Administrador para acesso à Página 4
+            if (email === 'admin@pinterest.com' && senha === '123') {
+                localStorage.setItem('usuarioLogado', JSON.stringify({
+                    nome: 'Administrador',
+                    email: email,
+                    isAdmin: true
+                }));
+                window.location.href = 'boasvindas.html';
+                return;
+            }
+
+            // Busca usuários cadastrados no JSON-Server
+            fetch('/pessoas/')
+                .then(resposta => resposta.json())
+                .then(dados => {
+                    const usuario = dados.find(p => p.email === email && p.senha === senha);
+
+                    if (usuario) {
+                        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+                        window.location.href = 'boasvindas.html';
+                    } else {
+                        alert('E-mail ou senha incorretos!');
+                    }
+                })
+                .catch(() => {
+                    alert('Erro ao conectar com o JSON-Server na porta 3000.');
+                });
+        });
+    </script>
+</body>
+</html>

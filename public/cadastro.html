@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Pinterest</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            <span class="logo-icon">📌</span> Pinterest
+        </a>
+    </header>
+
+    <div class="container" style="max-width: 560px;">
+        <h1>Inscreva-se no Pinterest</h1>
+        <p class="subtitulo">Preencha todos os campos obrigatórios abaixo</p>
+
+        <form id="formCadastro">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sobrenome">Sobrenome:</label>
+                    <input type="text" id="sobrenome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="identificadorCPF">CPF:</label>
+                    <input type="text" id="identificadorCPF" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" required>
+                </div>
+
+                <div class="form-group full">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group full">
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" required>
+                </div>
+
+                <div class="form-group full">
+                    <label for="rua">Rua:</label>
+                    <input type="text" id="rua" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cep">CEP:</label>
+                    <input type="text" id="cep" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" required>
+                </div>
+
+                <div class="form-group full">
+                    <label for="estado">Estado:</label>
+                    <input type="text" id="estado" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-pinterest">Cadastrar</button>
+        </form>
+
+        <div class="link-rodape">
+            Já tem uma conta? <a href="index.html">Voltar para o Login</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('formCadastro').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const novoUsuario = {
+                nome: document.getElementById('nome').value.trim(),
+                sobrenome: document.getElementById('sobrenome').value.trim(),
+                cpf: document.getElementById('identificadorCPF').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                senha: document.getElementById('senha').value.trim(),
+                rua: document.getElementById('rua').value.trim(),
+                cep: document.getElementById('cep').value.trim(),
+                cidade: document.getElementById('cidade').value.trim(),
+                estado: document.getElementById('estado').value.trim(),
+                telefone: document.getElementById('telefone').value.trim()
+            };
+
+            fetch('/pessoas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(novoUsuario)
+            })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error(`Erro HTTP: ${resposta.status}`);
+                }
+                return resposta.json();
+            })
+            .then(() => {
+                alert('Cadastro realizado com sucesso!');
+                window.location.href = 'index.html';
+            })
+            .catch(erro => {
+                alert('Não foi possível cadastrar. Verifique se você abriu por http://localhost:3000 e se o db.json tem "pessoas".\nDetalhe: ' + erro.message);
+            });
+        });
+    </script>
+
+</body>
+</html>
